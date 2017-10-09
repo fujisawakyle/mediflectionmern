@@ -15,6 +15,7 @@ module.exports = app => {
     res.send(req.user);
   });
 
+  //how we tell if the user is logged in
   app.get('/api/current_user', (req, res) => {
     res.send(req.user);
   });
