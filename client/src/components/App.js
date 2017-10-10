@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import Header from './Header';
+import Entry from './reflection/Entry';
+import Timer from './meditation/Timer';
 
 class App extends Component {
   componentDidMount() {
@@ -16,22 +19,28 @@ class App extends Component {
           <div>
             <h1>Welcome to Mediflection</h1>
             <h4>Track your meditation, track your reflection</h4>
-            <a href="/auth/google">Login With Google</a>
           </div>
         );
       default:
         return (
           <div>
-            <h1>Welcome to Mediflection</h1>
             <h4>You are signed in</h4>
-            <a href="/api/logout">Logout</a>
           </div>
         );
     }
   }
   render() {
     console.log(this.props);
-    return <div>{this.renderContent()}</div>;
+    return (
+      <div>
+        <Header />
+        {this.renderContent()}
+        <h3>Timer</h3>
+        <Timer />
+        <h3>Entry</h3>
+        <Entry />
+      </div>
+    );
   }
 }
 
