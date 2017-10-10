@@ -25,6 +25,10 @@ class App extends Component {
         return (
           <div>
             <h4>You are signed in</h4>
+            <h3>Timer</h3>
+            <Timer />
+            <h3>Entry</h3>
+            <Entry />
           </div>
         );
     }
@@ -35,10 +39,6 @@ class App extends Component {
       <div>
         <Header />
         {this.renderContent()}
-        <h3>Timer</h3>
-        <Timer />
-        <h3>Entry</h3>
-        <Entry />
       </div>
     );
   }
