@@ -8,6 +8,17 @@ import Timer from './meditation/Timer';
 class App extends Component {
   componentDidMount() {
     this.props.fetchUser();
+    this.props.fetchMediflections();
+  }
+  renderMediflections() {
+    return this.props.mediflections.map(mediflection => {
+      return (
+        <div>
+          <p>{mediflection.date}</p>
+          <p>{mediflection.entry}</p>
+        </div>
+      );
+    });
   }
 
   renderContent() {
@@ -29,6 +40,7 @@ class App extends Component {
             <Timer />
             <h3>Entry</h3>
             <Entry />
+            {this.renderMediflections()}
           </div>
         );
     }
@@ -44,8 +56,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ user }) {
-  return { user };
+function mapStateToProps({ user, mediflections }) {
+  return {
+    user,
+    mediflections
+  };
 }
 
 export default connect(mapStateToProps, actions)(App);
