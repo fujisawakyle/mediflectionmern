@@ -16,7 +16,7 @@ module.exports = app => {
 
     Mediflection.findOneAndUpdate(
       { date },
-      { date, entry, _user: req.user.id, time },
+      { date, entry, _user: req.user.id },
       { upsert: true },
       function(err, doc) {
         if (err) return res.send(500, { error: err });
