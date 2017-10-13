@@ -3,6 +3,8 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import * as actions from '../../actions';
 
+import EntryField from './EntryField';
+
 class Entry extends Component {
   update = entry => {
     console.log('in entry: date', this.props.date);
@@ -12,17 +14,11 @@ class Entry extends Component {
   };
 
   render() {
-    const myInitialValues = {
-      initialValues: {
-        entry: this.props.data.entry,
-        time: this.props.data.time
-      }
-    };
     console.log('props', this.props.data.entry);
     return (
       <div>
         <form onSubmit={this.props.handleSubmit(this.update)}>
-          <Field type="textarea" name="entry" component="input" />
+          <Field type="textarea" name="entry" component={EntryField} />
           <button type="submit">Submit</button>
         </form>
       </div>
