@@ -4,6 +4,7 @@ import * as actions from '../actions';
 import Header from './Header';
 import Entry from './reflection/Entry';
 import Timer from './meditation/Timer';
+import ShowDate from './ShowDate';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 import moment from 'moment';
@@ -66,7 +67,7 @@ class App extends Component {
         return (
           <div>
             <h4>You are signed in</h4>
-            <h4> Date: {this.props.date}</h4>
+            <ShowDate date={this.props.date} />
             <h3>Timer</h3>
             <Timer />
             <h3>Entry</h3>
