@@ -12,11 +12,16 @@ class Entry extends Component {
   };
 
   render() {
-    console.log('props', this.props.entry);
+    const myInitialValues = {
+      initialValues: {
+        entry: this.props.data.entry,
+        time: this.props.data.time
+      }
+    };
+    console.log('props', this.props.data.entry);
     return (
       <div>
         <form onSubmit={this.props.handleSubmit(this.update)}>
-          {/* <Field type="textarea" name="date" component="input" /> */}
           <Field type="textarea" name="entry" component="input" />
           <button type="submit">Submit</button>
         </form>
@@ -34,7 +39,10 @@ function mapStateToProps(state) {
 }
 
 Entry = reduxForm({
-  form: 'entryForm'
+  form: 'entryForm',
+  enableReinitialize: true
 })(Entry);
+
 Entry = connect(mapStateToProps, actions)(Entry);
+
 export default Entry;
