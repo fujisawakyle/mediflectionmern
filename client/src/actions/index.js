@@ -37,7 +37,7 @@ export const updateDate = value => {
 export const fetchData = value => {
   console.log('value', value);
   if (Object.keys(value).length === 0) {
-    value.entry = 'test';
+    value.entry = '';
     value.time = 0;
   }
   console.log('value', value);
