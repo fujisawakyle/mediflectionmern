@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 //this grabs input from props // es6
 class EntryField extends Component {
   state = {
-    entry: this.props.data.entry
+    entry: this.props.entry
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps.data', nextProps.data.entry);
-    console.log('this.props.data', this.props.data.entry);
-    if (nextProps.data.entry != this.props.data.entry) {
-      this.setState({ entry: nextProps.data.entry });
+    if (nextProps.entry !== this.props.entry) {
+      this.setState({ entry: nextProps.entry });
     }
   }
 
@@ -21,7 +19,6 @@ class EntryField extends Component {
     });
   };
   render() {
-    console.log('yo data', this.props.data);
     return (
       <div>
         <textarea
@@ -36,10 +33,7 @@ class EntryField extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state', state.data.entry);
-  return {
-    data: state.data
-  };
+  return {};
 }
 
 EntryField = connect(mapStateToProps)(EntryField);

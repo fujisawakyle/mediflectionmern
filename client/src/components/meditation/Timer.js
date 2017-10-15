@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
 import TimerField from './TimerField';
+import * as actions from '../../actions';
+import pluralize from 'pluralize';
 
 const minOne = value => {
   if (value < 1) {
@@ -11,10 +14,16 @@ const minOne = value => {
 };
 
 class Timer extends Component {
+  update = time => {
+    time.date = this.props.date;
+    this.props.updateTime(time);
+  };
   render() {
     return (
       <div>
-        <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+        {this.props.selectedMediflection.time}
+        {pluralize(' minute', this.props.time)}
+        <form onSubmit={this.props.handleSubmit(this.update)}>
           <Field
             normalize={minOne}
             value="1"
@@ -39,7 +48,15 @@ function validate({ timer }) {
   return errors;
 }
 
-export default reduxForm({
+function mapStateToProps(state) {
+  return {};
+}
+
+Timer = reduxForm({
   validate,
   form: 'entryForm'
 })(Timer);
+
+Timer = connect(mapStateToProps, actions)(Timer);
+
+export default Timer;

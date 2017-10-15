@@ -7,18 +7,14 @@ import EntryField from './EntryField';
 
 class Entry extends Component {
   update = entry => {
-    console.log('in entry: date', this.props.date);
-    entry.date = this.props.date;
-    console.log('entry', entry);
-    this.props.updateMediflection(entry);
+    this.props.updateEntry(this.props.selectedDay);
   };
 
   render() {
-    console.log('props', this.props.data.entry);
     return (
       <div>
         <form onSubmit={this.props.handleSubmit(this.update)}>
-          <Field type="textarea" name="entry" component={EntryField} />
+          <Field name="entry" component={EntryField} />
           <button type="submit">Submit</button>
         </form>
       </div>
@@ -27,10 +23,8 @@ class Entry extends Component {
 }
 
 function mapStateToProps(state) {
-  console.log('state', state.data.entry);
   return {
-    formValues: state.form.entryForm.values,
-    data: state.data
+    formValues: state.form.entryForm
   };
 }
 

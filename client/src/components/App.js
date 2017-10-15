@@ -1,55 +1,49 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+
 import Header from './Header';
 import Entry from './reflection/Entry';
 import Timer from './meditation/Timer';
 import ShowDate from './ShowDate';
+
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
-import moment from 'moment';
 
 class App extends Component {
   state = {
-    entry: ''
+    showDate: String(new Date()).slice(0, 15)
   };
   componentDidMount() {
     this.props.fetchUser();
-    this.props.fetchMediflections();
-    this.clickDay(new Date());
-  }
-  renderMediflections() {
-    return this.props.mediflections.map(mediflection => {
-      return (
-        <div key={mediflection._id}>
-          <p>{mediflection.date}</p>
-          <p>{mediflection.entry}</p>
-        </div>
-      );
+    this.props.fetchMediflections(() => {
+      this.clickDay(new Date());
     });
   }
-
-  findData = date => {
-    console.log('day', date);
-    console.log('mediflections', this.props.mediflections);
-
-    const data = this.props.mediflections.filter(mediflection => {
-      return mediflection.date == date;
-    });
-    data.length > 0 ? this.props.fetchData(data[0]) : this.props.fetchData({});
-  };
 
   clickDay = date => {
     date = String(date).slice(0, 15);
-    this.props.updateDate(date);
-    this.findData(date);
+    this.setState({
+      showDate: date
+    });
+    console.log(
+      'this.props.mediflections[date]',
+      this.props.mediflections[date]
+    );
+    this.props.fetchMediflection(this.props.mediflections[date]);
+  };
 
-    //make an action/reducer that changes the state of selectedDay
-    //to what ever is chosen.
-
-    // console.log(day);
-    // console.log('new Date(2017, 3, 12)', new Date(2017, 3, 12));
-    // console.log('new Date(day)', new Date(day));
+  renderMediflection = mediflection => {
+    console.log('medifl in renderMed', mediflection);
+    if (!mediflection) {
+      return <div> No mediflection selected</div>;
+    }
+    return (
+      <div>
+        <div>{`Entry: ${mediflection.entry}`}</div>
+        <div>{`Time: ${mediflection.time}`}</div>
+      </div>
+    );
   };
 
   renderContent() {
@@ -66,12 +60,13 @@ class App extends Component {
       default:
         return (
           <div>
+            {this.renderMediflection(this.props.selectedMediflection)}
             <h4>You are signed in</h4>
-            <ShowDate date={this.props.date} />
+            <ShowDate date={this.state.showDate} />
             <h3>Timer</h3>
-            <Timer />
+            <Timer selectedMediflection={this.props.selectedMediflection} />
             <h3>Entry</h3>
-            <Entry entry={this.props.data.entry} date={this.props.date} />
+            <Entry selectedMediflection={this.props.selectedMediflection} />
             <DayPicker
               todayButton="current month"
               selectedDays={[]}
@@ -82,7 +77,7 @@ class App extends Component {
     }
   }
   render() {
-    console.log(this.props);
+    console.log('in render', this.props.mediflections);
     return (
       <div>
         <Header />
@@ -92,12 +87,11 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ user, mediflections, date, data }) {
+function mapStateToProps({ user, mediflections, selectedMediflection }) {
   return {
     user,
     mediflections,
-    date,
-    data
+    selectedMediflection
   };
 }
 

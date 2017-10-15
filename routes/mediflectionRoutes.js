@@ -5,13 +5,12 @@ const Mediflection = mongoose.model('mediflections');
 
 module.exports = app => {
   app.get('/api/mediflections', requireLogin, async (req, res) => {
-    console.log('get', req.user.id);
     const mediflections = await Mediflection.find({ _user: req.user.id });
 
     res.send(mediflections);
   });
 
-  app.post('/api/mediflections', async (req, res) => {
+  app.post('/api/mediflection/entry', async (req, res) => {
     const { date, entry } = req.body;
 
     Mediflection.findOneAndUpdate(
