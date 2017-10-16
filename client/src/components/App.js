@@ -59,7 +59,7 @@ class App extends Component {
             <h4>You are signed in</h4>
             <ShowDate date={this.state.showDate} />
             <h3>Meditation</h3>
-            <Clock selectedMediflection={this.props.selectedMediflection} />
+            <Clock cdselectedMediflection={this.props.selectedMediflection} />
             <h3>Entry</h3>
             <Entry selectedMediflection={this.props.selectedMediflection} />
             <DayPicker
