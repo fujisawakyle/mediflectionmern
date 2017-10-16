@@ -4,8 +4,8 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Entry from './reflection/Entry';
-import Timer from './meditation/Timer';
 import ShowDate from './ShowDate';
+import Clock from './meditation/Clock';
 
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -58,8 +58,8 @@ class App extends Component {
             {this.renderMediflection(this.props.selectedMediflection)}
             <h4>You are signed in</h4>
             <ShowDate date={this.state.showDate} />
-            <h3>Timer</h3>
-            <Timer selectedMediflection={this.props.selectedMediflection} />
+            <h3>Meditation</h3>
+            <Clock selectedMediflection={this.props.selectedMediflection} />
             <h3>Entry</h3>
             <Entry selectedMediflection={this.props.selectedMediflection} />
             <DayPicker

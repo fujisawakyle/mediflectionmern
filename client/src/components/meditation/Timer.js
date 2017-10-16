@@ -3,6 +3,8 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import TimerField from './TimerField';
 import * as actions from '../../actions';
+
+import ReactCountdownClock from 'react-countdown-clock';
 import pluralize from 'pluralize';
 
 const minOne = value => {
@@ -15,9 +17,10 @@ const minOne = value => {
 
 class Timer extends Component {
   update = time => {
-    time.date = this.props.date;
-    this.props.updateTime(time);
+    // time.date = this.props.date;
+    // this.props.updateTime(time);
   };
+
   render() {
     return (
       <div>
