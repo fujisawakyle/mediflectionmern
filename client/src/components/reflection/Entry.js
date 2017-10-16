@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import * as actions from '../../actions';
 
 //this grabs input from props // es6
 class Entry extends Component {
@@ -17,10 +18,11 @@ class Entry extends Component {
     });
   };
   update = entry => {
-    console.log(entry);
+    const updatedMediflection = this.props.selectedMediflection;
+    updatedMediflection.entry = entry;
+    this.props.updateMediflection(updatedMediflection);
   };
   render() {
-    console.log('in Entry', this.props);
     return (
       <div>
         <textarea
@@ -43,6 +45,6 @@ function mapStateToProps({ selectedMediflection }) {
   };
 }
 
-Entry = connect(mapStateToProps)(Entry);
+Entry = connect(mapStateToProps, actions)(Entry);
 
 export default Entry;

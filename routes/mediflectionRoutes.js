@@ -10,12 +10,13 @@ module.exports = app => {
     res.send(mediflections);
   });
 
-  app.post('/api/mediflection/entry', async (req, res) => {
-    const { date, entry } = req.body;
+  app.post('/api/mediflection/', async (req, res) => {
+    console.log('req.body', req.body);
+    const { date, entry, time } = req.body;
 
     Mediflection.findOneAndUpdate(
       { date },
-      { date, entry, _user: req.user.id },
+      { date, entry, time, _user: req.user.id },
       { upsert: true },
       function(err, doc) {
         if (err) return res.send(500, { error: err });

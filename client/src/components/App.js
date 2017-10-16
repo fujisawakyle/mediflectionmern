@@ -26,15 +26,10 @@ class App extends Component {
     this.setState({
       showDate: date
     });
-    console.log(
-      'this.props.mediflections[date]',
-      this.props.mediflections[date]
-    );
-    this.props.fetchMediflection(this.props.mediflections[date]);
+    this.props.fetchMediflection(date, this.props.mediflections[date]);
   };
 
   renderMediflection = mediflection => {
-    console.log('medifl in renderMed', mediflection);
     if (!mediflection) {
       return <div> No mediflection selected</div>;
     }
@@ -77,7 +72,6 @@ class App extends Component {
     }
   }
   render() {
-    console.log('in render', this.props.mediflections);
     return (
       <div>
         <Header />

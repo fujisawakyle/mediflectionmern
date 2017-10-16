@@ -1,5 +1,10 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_MEDIFLECTIONS, FETCH_MEDIFLECTION } from './types';
+import {
+  FETCH_USER,
+  FETCH_MEDIFLECTIONS,
+  FETCH_MEDIFLECTION,
+  UPDATE_MEDIFLECTION
+} from './types';
 
 //if redux thunk sees we return a function in a action creator,
 //it will automatically pass in dispatch as an arg.
@@ -16,9 +21,10 @@ export const fetchMediflections = callback => async dispatch => {
   await callback();
 };
 
-export const fetchMediflection = mediflection => {
+export const fetchMediflection = (date, mediflection) => {
   if (!mediflection) {
     mediflection = {};
+    mediflection.date = date;
     mediflection.entry = '';
     mediflection.time = 0;
   }
@@ -26,4 +32,9 @@ export const fetchMediflection = mediflection => {
     type: FETCH_MEDIFLECTION,
     payload: mediflection
   };
+};
+
+export const updateMediflection = mediflection => dispatch => {
+  axios.post('/api/mediflection', mediflection);
+  dispatch({ type: UPDATE_MEDIFLECTION, payload: mediflection });
 };
