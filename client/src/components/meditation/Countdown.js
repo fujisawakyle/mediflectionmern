@@ -68,12 +68,12 @@ export default class Countdown extends Component {
       // }
     } else {
       if (this.timer == 0) {
-        this.timer = setInterval(this.countDown, 1000);
+        this.timer = setInterval(this.countDown, 100);
       }
       this.props.toggleInputShow();
       this.setState({
-        showTime: !this.state.showTime,
-        startToggle: !this.state.startToggle,
+        showTime: true,
+        startToggle: true,
         seconds: this.props.timeVal * 60,
         playStatus: Sound.status.PLAYING
       });
@@ -86,7 +86,7 @@ export default class Countdown extends Component {
 
   continueTimer = e => {
     this.setState({
-      startToggle: !this.state.startToggle
+      startToggle: true
     });
     e.preventDefault();
     if (this.timer == 0) {
@@ -98,7 +98,7 @@ export default class Countdown extends Component {
     clearInterval(this.timer);
     this.timer = 0;
     this.setState({
-      startToggle: !this.state.startToggle
+      startToggle: false
     });
   };
 
@@ -223,6 +223,7 @@ export default class Countdown extends Component {
       // }
       //CASE: timer in session
       if (this.state.startToggle && this.state.showTime) {
+        console.log(' 1');
         timerDisplay = (
           <div>
             {continueButton} {exitButton}
@@ -230,9 +231,11 @@ export default class Countdown extends Component {
         );
         // CASE: timer has not started
       } else if (this.state.startToggle && !this.state.showTime) {
+        console.log('2');
         timerDisplay = <div>{startButton}</div>;
         // CASE: timer in session
       } else if (!this.state.startToggle && this.state.showTime) {
+        console.log('3');
         if (this.props.timerDoneFlag) {
           timerDisplay = <div>{exitButton}</div>;
           //
@@ -244,6 +247,7 @@ export default class Countdown extends Component {
           );
         }
       } else {
+        console.log('4');
         timerDisplay = <div>{exitButton}</div>;
       }
     }

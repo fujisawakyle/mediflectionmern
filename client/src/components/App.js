@@ -6,6 +6,7 @@ import Header from './Header';
 import Entry from './reflection/Entry';
 import ShowDate from './ShowDate';
 import Clock from './meditation/Clock';
+import Meditation from './meditation/Meditation';
 
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
@@ -83,6 +84,10 @@ class App extends Component {
               todayButton="current month"
               selectedDays={[]}
               onDayClick={date => this.clickDay(date)}
+            />
+            <Meditation
+              today={this.state.today}
+              selectedMediflection={this.props.selectedMediflection}
             />
           </div>
         );

@@ -86,7 +86,7 @@ export default class Clock extends Component {
           timerDoneReset={this.timerDoneReset}
           timerDoneFlag={timerDoneFlag}
           seconds={this.state.seconds}
-          logTime={3}
+          logTime={90}
           journal={this.props.journal}
           selectedDay={this.props.selectedDay}
         />
