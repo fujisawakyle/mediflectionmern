@@ -1,16 +1,6 @@
 import React, { Component } from 'react';
 import Countdown from './Countdown';
-
-const style = {
-  // clockDisplay : {
-  //     width: '55px',
-  //     height: '30px',
-  //     fontSize: '1.5em',
-  //     color: '#4A90E2',
-  //     textAlign: 'right',
-  //     background: 'rgba(255,255,255,0.5)',
-  // }
-};
+import pluralize from 'pluralize';
 
 let timerDoneFlag = false;
 
@@ -19,6 +9,7 @@ export default class Clock extends Component {
     super(props);
 
     this.state = {
+      selectedMediflection: this.props.selectedMediflection,
       showInput: true,
       seconds: 60,
       value: 1
@@ -60,21 +51,17 @@ export default class Clock extends Component {
     if (this.state.value != 1) {
       minutesInput = ' minutes';
     }
-    let minutesTracked = ' minute';
-    if (this.props.time != 1) {
-      minutesTracked = ' minutes';
-    }
     let timeInput;
     if (this.state.showInput && this.props.today) {
       timeInput = (
         <div className="clockBox">
           <input
-            style={style.clockDisplay}
             className="component component__field component__field--timer"
             type="number"
             value={this.state.value}
             onChange={this.handleChange}
           />
+
           {minutesInput}
         </div>
       );
@@ -84,8 +71,8 @@ export default class Clock extends Component {
     return (
       <div>
         <h5 className="timer__text">
-          {' '}
-          {this.props.time} {minutesTracked}{' '}
+          {this.props.selectedMediflection.time}{' '}
+          {pluralize(' minute', this.props.selectedMediflection.time)}
         </h5>
         {timeInput}
         <Countdown
@@ -99,7 +86,7 @@ export default class Clock extends Component {
           timerDoneReset={this.timerDoneReset}
           timerDoneFlag={timerDoneFlag}
           seconds={this.state.seconds}
-          logTime={60}
+          logTime={3}
           journal={this.props.journal}
           selectedDay={this.props.selectedDay}
         />

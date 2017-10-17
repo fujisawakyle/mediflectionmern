@@ -10,10 +10,17 @@ import Clock from './meditation/Clock';
 import DayPicker from 'react-day-picker';
 import 'react-day-picker/lib/style.css';
 
+const today = String(new Date()).slice(0, 15);
+
 class App extends Component {
-  state = {
-    showDate: String(new Date()).slice(0, 15)
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      showDate: String(new Date()).slice(0, 15),
+      today: true
+    };
+  }
   componentDidMount() {
     this.props.fetchUser();
     this.props.fetchMediflections(() => {
@@ -23,6 +30,13 @@ class App extends Component {
 
   clickDay = date => {
     date = String(date).slice(0, 15);
+
+    if (today == date) {
+      this.setState({ today: true });
+    } else {
+      this.setState({ today: false });
+    }
+
     this.setState({
       showDate: date
     });
@@ -59,7 +73,10 @@ class App extends Component {
             <h4>You are signed in</h4>
             <ShowDate date={this.state.showDate} />
             <h3>Meditation</h3>
-            <Clock cdselectedMediflection={this.props.selectedMediflection} />
+            <Clock
+              today={this.state.today}
+              selectedMediflection={this.props.selectedMediflection}
+            />
             <h3>Entry</h3>
             <Entry selectedMediflection={this.props.selectedMediflection} />
             <DayPicker
