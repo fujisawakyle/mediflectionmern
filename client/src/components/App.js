@@ -19,7 +19,8 @@ class App extends Component {
 
     this.state = {
       showDate: String(new Date()).slice(0, 15),
-      today: true
+      today: true,
+      showInput: true
     };
   }
   componentDidMount() {
@@ -33,27 +34,15 @@ class App extends Component {
     date = String(date).slice(0, 15);
 
     if (today == date) {
-      this.setState({ today: true });
+      this.setState({ today: true, showInput: true });
     } else {
-      this.setState({ today: false });
+      this.setState({ today: false, showInput: false });
     }
 
     this.setState({
       showDate: date
     });
     this.props.fetchMediflection(date, this.props.mediflections[date]);
-  };
-
-  renderMediflection = mediflection => {
-    if (!mediflection) {
-      return <div> No mediflection selected</div>;
-    }
-    return (
-      <div>
-        <div>{`Entry: ${mediflection.entry}`}</div>
-        <div>{`Time: ${mediflection.time}`}</div>
-      </div>
-    );
   };
 
   renderContent() {
@@ -70,10 +59,9 @@ class App extends Component {
       default:
         return (
           <div>
-            {this.renderMediflection(this.props.selectedMediflection)}
             <h4>You are signed in</h4>
             <ShowDate date={this.state.showDate} />
-            <h3>Meditation</h3>
+
             <Clock
               today={this.state.today}
               selectedMediflection={this.props.selectedMediflection}
@@ -87,6 +75,7 @@ class App extends Component {
             />
             <Meditation
               today={this.state.today}
+              showInput={this.state.showInput}
               selectedMediflection={this.props.selectedMediflection}
             />
           </div>
