@@ -3,7 +3,8 @@ import {
   FETCH_USER,
   FETCH_MEDIFLECTIONS,
   FETCH_MEDIFLECTION,
-  UPDATE_MEDIFLECTION
+  UPDATE_MEDIFLECTION,
+  UPDATE_DAYS_ARRAY
 } from './types';
 
 //if redux thunk sees we return a function in a action creator,
@@ -37,4 +38,11 @@ export const fetchMediflection = (date, mediflection) => {
 export const updateMediflection = mediflection => dispatch => {
   axios.post('/api/mediflection', mediflection);
   dispatch({ type: UPDATE_MEDIFLECTION, payload: mediflection });
+};
+
+export const updateDaysArray = dateArray => {
+  return {
+    type: UPDATE_DAYS_ARRAY,
+    payload: dateArray
+  };
 };

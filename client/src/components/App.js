@@ -29,7 +29,9 @@ class App extends Component {
     this.props.fetchUser();
     this.props.fetchMediflections(() => {
       this.clickDay(new Date());
-      this.generateDateArray(this.props.mediflections);
+      this.props.updateDaysArray(
+        _.keys(this.props.mediflections).map(date => new Date(date))
+      );
     });
   }
 
@@ -46,10 +48,6 @@ class App extends Component {
       showDate: date
     });
     this.props.fetchMediflection(date, this.props.mediflections[date]);
-  };
-
-  generateDateArray = dates => {
-    this.setState({ daysArray: _.keys(dates).map(date => new Date(date)) });
   };
 
   renderContent() {
@@ -70,7 +68,7 @@ class App extends Component {
             <ShowDate date={this.state.showDate} />
             <DayPicker
               todayButton="current month"
-              selectedDays={this.state.daysArray}
+              selectedDays={this.props.daysArray}
               onDayClick={date => this.clickDay(date)}
             />
             <h3>Entry</h3>
@@ -85,7 +83,7 @@ class App extends Component {
     }
   }
   render() {
-    console.log('this.state.daysArray', this.state.daysArray);
+    console.log('this.props.daysArray', this.props.daysArray);
     return (
       <div>
         <Header />
@@ -95,11 +93,17 @@ class App extends Component {
   }
 }
 
-function mapStateToProps({ user, mediflections, selectedMediflection }) {
+function mapStateToProps({
+  user,
+  mediflections,
+  selectedMediflection,
+  daysArray
+}) {
   return {
     user,
     mediflections,
-    selectedMediflection
+    selectedMediflection,
+    daysArray
   };
 }
 
