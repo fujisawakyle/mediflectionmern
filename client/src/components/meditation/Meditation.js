@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+
 import pluralize from 'pluralize';
 import Sound from 'react-sound';
 
@@ -6,9 +8,12 @@ import ShowTracked from './showTracked';
 import ShowCountdown from './showCountdown';
 import ShowRemaining from './ShowRemaining';
 
+import * as actions from '../../actions';
+
 class Meditation extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       timeLeft: this.secondsToTime(60),
       seconds: 60,
@@ -17,7 +22,8 @@ class Meditation extends Component {
       showTimer: false,
       startCountdown: false,
       value: 1,
-      timer: 0
+      timer: 0,
+      time: this.props.selectedMediflection.time
     };
   }
 
@@ -47,9 +53,6 @@ class Meditation extends Component {
     //   //   }, 2000);
     //   // }
     // } else {
-    if (this.state.timer == 0) {
-      this.state.timer = setInterval(this.countDown, 1000);
-    }
 
     this.setState({
       showTimer: true,
@@ -57,6 +60,10 @@ class Meditation extends Component {
       startCountdown: true,
       seconds: this.state.value * 60
     });
+
+    if (this.state.timer == 0) {
+      this.state.timer = setInterval(this.countDown, 100);
+    }
 
     // document
     //   .getElementsByClassName('c-site__component--timer')[0]
@@ -149,16 +156,32 @@ class Meditation extends Component {
     }
 
     //log time every 1 minute
+    console.log('log', log);
+    console.log('time', this.state.time);
     if (log === 0) {
       this.setState({
-        logTime: 3,
+        logTime: 60,
         time: this.state.time + 1
       });
+
       //log database
+      const updatedMediflection = this.props.selectedMediflection;
+      updatedMediflection.time = this.state.time;
+      this.props.updateMediflection(updatedMediflection);
     }
   };
 
   render() {
+    console.log(
+      'this.props.selectedMediflection.time',
+      this.props.selectedMediflection.time
+    );
+    console.log(
+      'this.props.selectedMediflection',
+      this.props.selectedMediflection
+    );
+    console.log('this.state.time', this.state.time);
+
     const { time } = this.props.selectedMediflection;
 
     let minutesInput = ' minute';
@@ -184,7 +207,7 @@ class Meditation extends Component {
       timeInput = <div> </div>;
     }
 
-    let timerDisplay;
+    let buttonDisplay;
     const startButton = (
       <button className="button startButton" onClick={this.startTimer}>
         Start
@@ -211,12 +234,12 @@ class Meditation extends Component {
     if (this.props.today) {
       //CASE: timer in session - check for finished
       if (this.state.startCountdown && this.state.showTimer) {
-        console.log(' 1');
+        // console.log(' 1');
         if (this.props.timerDoneFlag) {
-          timerDisplay = <div>{exitButton}</div>;
+          buttonDisplay = <div>{exitButton}</div>;
           //
         } else {
-          timerDisplay = (
+          buttonDisplay = (
             <div>
               {pauseButton} {exitButton}
             </div>
@@ -224,12 +247,12 @@ class Meditation extends Component {
         }
         // CASE: timer has not started
       } else if (!this.state.startCountdown && !this.state.showTimer) {
-        console.log('2');
-        timerDisplay = <div>{startButton}</div>;
+        // console.log('2');
+        buttonDisplay = <div>{startButton}</div>;
         // CASE: timer is paused
       } else if (!this.state.startCountdown && this.state.showTimer) {
-        console.log('3');
-        timerDisplay = (
+        // console.log('3');
+        buttonDisplay = (
           <div>
             {continueButton} {exitButton}
           </div>
@@ -251,7 +274,7 @@ class Meditation extends Component {
             logTime={this.state.logTime}
           />
         )}
-        {timerDisplay}
+        {buttonDisplay}
 
         <Sound
           url="sessionBell.mp3"
@@ -265,5 +288,13 @@ class Meditation extends Component {
     );
   }
 }
+
+function mapStateToProps({ selectedMediflection }) {
+  return {
+    selectedMediflection
+  };
+}
+
+Meditation = connect(mapStateToProps, actions)(Meditation);
 
 export default Meditation;

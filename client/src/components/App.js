@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import * as actions from '../actions';
+import _ from 'lodash';
 
 import Header from './Header';
 import Entry from './reflection/Entry';
@@ -20,13 +21,15 @@ class App extends Component {
     this.state = {
       showDate: String(new Date()).slice(0, 15),
       today: true,
-      showInput: true
+      showInput: true,
+      daysArray: []
     };
   }
   componentDidMount() {
     this.props.fetchUser();
     this.props.fetchMediflections(() => {
       this.clickDay(new Date());
+      this.generateDateArray(this.props.mediflections);
     });
   }
 
@@ -45,8 +48,12 @@ class App extends Component {
     this.props.fetchMediflection(date, this.props.mediflections[date]);
   };
 
+  generateDateArray = dates => {
+    this.setState({ daysArray: _.keys(dates).map(date => new Date(date)) });
+  };
+
   renderContent() {
-    switch (this.props.user) {
+    switch (this.props.user && !_.isEmpty(this.props.selectedMediflection)) {
       case null:
         return;
       case false:
@@ -61,18 +68,13 @@ class App extends Component {
           <div>
             <h4>You are signed in</h4>
             <ShowDate date={this.state.showDate} />
-
-            <Clock
-              today={this.state.today}
-              selectedMediflection={this.props.selectedMediflection}
+            <DayPicker
+              todayButton="current month"
+              selectedDays={this.state.daysArray}
+              onDayClick={date => this.clickDay(date)}
             />
             <h3>Entry</h3>
             <Entry selectedMediflection={this.props.selectedMediflection} />
-            <DayPicker
-              todayButton="current month"
-              selectedDays={[]}
-              onDayClick={date => this.clickDay(date)}
-            />
             <Meditation
               today={this.state.today}
               showInput={this.state.showInput}
@@ -83,6 +85,7 @@ class App extends Component {
     }
   }
   render() {
+    console.log('this.state.daysArray', this.state.daysArray);
     return (
       <div>
         <Header />
