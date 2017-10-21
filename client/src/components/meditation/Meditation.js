@@ -21,6 +21,7 @@ class Meditation extends Component {
       showInput: this.props.showInput,
       showTimer: false,
       startCountdown: false,
+      timerDoneFlag: false,
       value: 1,
       timer: 0,
       time: this.props.selectedMediflection.time
@@ -58,6 +59,7 @@ class Meditation extends Component {
       showTimer: true,
       showInput: false,
       startCountdown: true,
+      timerDoneFlag: false,
       seconds: this.state.value * 60
     });
 
@@ -151,8 +153,10 @@ class Meditation extends Component {
     // Check if we're at zero.
     if (seconds === 0) {
       clearInterval(this.state.timer);
-      this.props.timerDone();
       this.handleSongStartPlaying();
+      this.setState({
+        timerDoneFlag: true
+      });
     }
 
     //log time every 1 minute
@@ -238,7 +242,8 @@ class Meditation extends Component {
       //CASE: timer in session - check for finished
       if (this.state.startCountdown && this.state.showTimer) {
         // console.log(' 1');
-        if (this.props.timerDoneFlag) {
+        if (this.state.timerDoneFlag) {
+          console.log('this.state.timerDoneFlag', this.state.timerDoneFlag);
           buttonDisplay = <div>{exitButton}</div>;
           //
         } else {
