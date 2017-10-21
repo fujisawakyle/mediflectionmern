@@ -21,7 +21,8 @@
     "react-sound": "^0.8.0",
     "redux": "^3.7.2",
     "redux-form": "^7.1.0",
-    "redux-thunk": "^2.2.0"
+    "redux-thunk": "^2.2.0",
+    "styled-components": "^2.2.1"
   },
   "scripts": {
     "start": "react-scripts start",

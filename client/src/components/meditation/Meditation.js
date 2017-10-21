@@ -5,7 +5,6 @@ import pluralize from 'pluralize';
 import Sound from 'react-sound';
 
 import ShowTracked from './showTracked';
-import ShowCountdown from './showCountdown';
 import ShowRemaining from './ShowRemaining';
 
 import * as actions from '../../actions';

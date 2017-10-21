@@ -1,6 +1,14 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
 import * as actions from '../actions';
+
+const Title = styled.h1`
+  font-size: 1.5em;
+  text-align: center;
+  color: palevioletred;
+`;
 
 class Header extends Component {
   renderUserStatus() {
@@ -24,7 +32,7 @@ class Header extends Component {
   render() {
     return (
       <div>
-        <h1>Mediflection</h1>
+        <Title>Mediflection</Title>
         {this.renderUserStatus()}
       </div>
     );
