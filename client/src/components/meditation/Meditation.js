@@ -17,7 +17,7 @@ class Meditation extends Component {
     this.state = {
       timeLeft: this.secondsToTime(60),
       seconds: 60,
-      logTime: 60,
+      logTime: 10,
       showInput: this.props.showInput,
       showTimer: false,
       startCountdown: false,
@@ -168,6 +168,9 @@ class Meditation extends Component {
       const updatedMediflection = this.props.selectedMediflection;
       updatedMediflection.time = this.state.time;
       this.props.updateMediflection(updatedMediflection);
+      this.props.updateDaysArray([
+        new Date(this.props.selectedMediflection.date)
+      ]);
     }
   };
 

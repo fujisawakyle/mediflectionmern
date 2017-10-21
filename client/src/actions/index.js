@@ -41,6 +41,7 @@ export const updateMediflection = mediflection => dispatch => {
 };
 
 export const updateDaysArray = dateArray => {
+  console.log('dateArray', dateArray);
   return {
     type: UPDATE_DAYS_ARRAY,
     payload: dateArray

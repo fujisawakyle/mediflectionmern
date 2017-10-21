@@ -21,8 +21,7 @@ class App extends Component {
     this.state = {
       showDate: String(new Date()).slice(0, 15),
       today: true,
-      showInput: true,
-      daysArray: []
+      showInput: true
     };
   }
   componentDidMount() {
@@ -83,7 +82,7 @@ class App extends Component {
     }
   }
   render() {
-    console.log('this.props.daysArray', this.props.daysArray);
+    console.log('daysArray', this.props.daysArray);
     return (
       <div>
         <Header />

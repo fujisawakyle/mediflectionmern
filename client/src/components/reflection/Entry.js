@@ -21,6 +21,9 @@ class Entry extends Component {
     const updatedMediflection = this.props.selectedMediflection;
     updatedMediflection.entry = entry;
     this.props.updateMediflection(updatedMediflection);
+    this.props.updateDaysArray([
+      new Date(this.props.selectedMediflection.date)
+    ]);
   };
   render() {
     return (
@@ -39,9 +42,10 @@ class Entry extends Component {
   }
 }
 
-function mapStateToProps({ selectedMediflection }) {
+function mapStateToProps({ selectedMediflection, daysArray }) {
   return {
-    selectedMediflection
+    selectedMediflection,
+    daysArray
   };
 }
 
